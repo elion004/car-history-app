@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/car-history-app/static/css/main.fcc31bef.css",
+    "main.js": "/car-history-app/static/js/main.b0927a99.js",
+    "static/js/453.0c23e766.chunk.js": "/car-history-app/static/js/453.0c23e766.chunk.js",
+    "index.html": "/car-history-app/index.html",
+    "main.fcc31bef.css.map": "/car-history-app/static/css/main.fcc31bef.css.map",
+    "main.b0927a99.js.map": "/car-history-app/static/js/main.b0927a99.js.map",
+    "453.0c23e766.chunk.js.map": "/car-history-app/static/js/453.0c23e766.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.fcc31bef.css",
+    "static/js/main.b0927a99.js"
+  ]
+}
