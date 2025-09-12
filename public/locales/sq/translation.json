@@ -1,0 +1,50 @@
+{
+  "damageExternalDesc": "Premium Report opens outside: accident data is not displayed in this application.",
+  "mileageExternalDesc": "The Premium report opens outwards and can include mileage history.",
+  "theftExternalDesc": "Raporti Premium hapet jashtë dhe mund të përfshijë kontrollet e vjedhjes.",
+
+  "bodyClass": "Body class",
+  "enginePower": "Engine power",
+  "typeOfFuel": "Type of fuel",
+  "driveType": "Drive Type",
+  "vehicleType": "Vehicle type",
+  "plantLand": "Country of manufacture",
+  "doors": "doors",
+  "engineCylindersNumber": "Engine cylinders",
+  "transmissionType": "Transmission type",
+
+  "historyCheck": "Check Vehicle History",
+  "enterFIN": "Enter the FIN number to get the complete vehicle history",
+  "FinNumber": "VIN number",
+  "enterFinPlaceholder": "Enter the 17-character FIN number",
+
+  "searching": "searching...",
+  "search": "Search History",
+  "newSearch": "New Search",
+
+  "openExternalDesc": "Open the Premium Report external",
+  "externalDetailedDesc": "Detailed accident history, verified mileage and theft checks from {{PROVIDER.countries}}. Report opens in a new tab in",
+  "immediateResults": "Immediate results",
+  "oneTimeReport": "One time report",
+  "openExternal": "Open the Premium Report",
+  "infoExternal": "Note: Purchasing and viewing the report occurs entirely on the provider's website. This app does not store payment or report data.",
+
+  "vehicleInfo": "Vehicle Information",
+  "brand": "Brand",
+  "model": "Model",
+  "year": "Year",
+  "producer": "Manufacturer",
+  "fin": "FIN/VIN",
+
+  "historyOfDamage": "History of Damage",
+  "mileageHistory": "Mileage History",
+  "theftControl": "Theft Control",
+  "limitedData": "Limited data",
+
+  "ApiError": "API Error:",
+  "getDataError": "Failed to retrieve vehicle data:",
+  "handleSubmitError": "Ju lutem shkruani numrin e FIN",
+  "validateFinError": "The FIN number is invalid. It must be 17 characters (A-Z, 0-9, no I, O, Q)",
+  "noDataFoundError": "Invalid FIN or no data found",
+  "noDataError": "There are no data"
+}
