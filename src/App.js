@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Search, Car, AlertCircle, Gauge, Wrench, Info, Star, Shield, Clock, ExternalLink, Database, Globe, CheckCircle, TrendingDown, FileText } from 'lucide-react';
-import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { Helmet } from 'react-helmet';
 
 const PROVIDER = {
   name: 'carVertical',
@@ -132,7 +132,7 @@ const CarHistoryApp = () => {
   };
 
   return (
-    <HelmetProvider>
+    <>
       <Helmet>
         <title>{getPageTitle()}</title>
         <meta name="description" content={getPageDescription()} />
@@ -446,7 +446,7 @@ const CarHistoryApp = () => {
         </div>
       </footer>
       </div>
-    </HelmetProvider>
+    </>
   );
 };
 
