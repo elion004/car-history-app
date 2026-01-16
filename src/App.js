@@ -163,6 +163,56 @@ const CarHistoryApp = () => {
               : undefined,
           })}
         </script>
+        {!results && (
+          <script type="application/ld+json">
+            {JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'FAQPage',
+              mainEntity: [
+                {
+                  '@type': 'Question',
+                  name: 'Si mund të kontrollo automjetin me VIN?',
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: 'Për të kontrolluar automjetin, gjeni numrin VIN/FIN 17-shifror të automjetit (zakonisht gjendet në regjistrim, në derën e shoferit ose në xhamin e përparmë). Vendosni numrin në fushën e kërkimit dhe klikoni "Kërko Historia" për rezultate të menjëhershme.',
+                  },
+                },
+                {
+                  '@type': 'Question',
+                  name: 'Çfarë informacioni shfaq kontrolli i automjetit?',
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: 'Kontrolli i automjetit tregon specifikime teknike, historinë e aksidenteve, verifikimin e kilometrazhit, kontrollin e vjedhjes, dhe informacion për riparimet. Raporti premium ofron të dhëna nga 40+ vende dhe 900+ burime.',
+                  },
+                },
+                {
+                  '@type': 'Question',
+                  name: 'A është i sigurt kontrolli i automjetit online?',
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: 'Po, kontrolli i automjetit është plotësisht i sigurt. Përdorim burime zyrtare dhe të verifikuara për të siguruar informacion të saktë dhe të besueshëm mbi historinë e automjetit.',
+                  },
+                },
+                {
+                  '@type': 'Question',
+                  name: 'Sa kushton të kontrollosh një automjet?',
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: 'Kontrolli bazik i automjetit është falas dhe tregon informacion të përgjithshëm. Raporti i plotë premium, që përfshin historinë e detajuar të aksidenteve dhe kilometrazhit, kushton nga €13.99.',
+                  },
+                },
+                {
+                  '@type': 'Question',
+                  name: 'Pse duhet të kontrollo makinën përpara blerjes?',
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: 'Kontrolli i makinës përpara blerjes të ndihmon të zbulosh probleme të fshehura si kilometrazhi i manipuluar, aksidente të mëparshme, ose nëse automjeti është i vjedhur. Kjo mund të të kursejë mijëra euro dhe të shmangë probleme ligjore.',
+                  },
+                },
+              ],
+            })}
+          </script>
+        )}
         {results && (
           <script type="application/ld+json">
             {JSON.stringify({
@@ -348,6 +398,49 @@ const CarHistoryApp = () => {
                 <h3 className="text-xl font-semibold text-gray-800 mb-2">Siguria & Thirrjet</h3>
                 <p className="text-gray-600">Shiko vlerësimet e sigurisë dhe thirrjet e prodhuesit</p>
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* FAQ Section */}
+        {!results && (
+          <div className="max-w-4xl mx-auto mb-12">
+            <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">Pyetje të Shpeshta</h2>
+            <div className="space-y-4">
+              <details className="bg-white rounded-lg shadow-md p-6">
+                <summary className="font-semibold text-lg text-gray-800 cursor-pointer">Si mund të kontrollo automjetin me VIN?</summary>
+                <p className="mt-3 text-gray-700">
+                  Për të kontrolluar automjetin, gjeni numrin VIN/FIN 17-shifror të automjetit (zakonisht gjendet në regjistrim, në derën e shoferit ose në xhamin e përparmë). Vendosni numrin në fushën e kërkimit dhe klikoni "Kërko Historia" për rezultate të menjëhershme.
+                </p>
+              </details>
+
+              <details className="bg-white rounded-lg shadow-md p-6">
+                <summary className="font-semibold text-lg text-gray-800 cursor-pointer">Çfarë informacioni shfaq kontrolli i automjetit?</summary>
+                <p className="mt-3 text-gray-700">
+                  Kontrolli i automjetit tregon specifikime teknike, historinë e aksidenteve, verifikimin e kilometrazhit, kontrollin e vjedhjes, dhe informacion për riparimet. Raporti premium ofron të dhëna nga 40+ vende dhe 900+ burime.
+                </p>
+              </details>
+
+              <details className="bg-white rounded-lg shadow-md p-6">
+                <summary className="font-semibold text-lg text-gray-800 cursor-pointer">A është i sigurt kontrolli i automjetit online?</summary>
+                <p className="mt-3 text-gray-700">
+                  Po, kontrolli i automjetit është plotësisht i sigurt. Përdorim burime zyrtare dhe të verifikuara për të siguruar informacion të saktë dhe të besueshëm mbi historinë e automjetit.
+                </p>
+              </details>
+
+              <details className="bg-white rounded-lg shadow-md p-6">
+                <summary className="font-semibold text-lg text-gray-800 cursor-pointer">Sa kushton të kontrollosh një automjet?</summary>
+                <p className="mt-3 text-gray-700">
+                  Kontrolli bazik i automjetit është falas dhe tregon informacion të përgjithshëm. Raporti i plotë premium, që përfshin historinë e detajuar të aksidenteve dhe kilometrazhit, kushton nga €13.99.
+                </p>
+              </details>
+
+              <details className="bg-white rounded-lg shadow-md p-6">
+                <summary className="font-semibold text-lg text-gray-800 cursor-pointer">Pse duhet të kontrollo makinën përpara blerjes?</summary>
+                <p className="mt-3 text-gray-700">
+                  Kontrolli i makinës përpara blerjes të ndihmon të zbulosh probleme të fshehura si kilometrazhi i manipuluar, aksidente të mëparshme, ose nëse automjeti është i vjedhur. Kjo mund të të kursejë mijëra euro dhe të shmangë probleme ligjore.
+                </p>
+              </details>
             </div>
           </div>
         )}
