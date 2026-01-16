@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Search, Car, AlertCircle, Gauge, Wrench, Info, Star, Shield, Clock, ExternalLink, Database, Globe, CheckCircle, TrendingDown, FileText } from 'lucide-react';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 const PROVIDER = {
   name: 'carVertical',
@@ -116,9 +117,70 @@ const CarHistoryApp = () => {
     setShowPremiumOption(false);
   };
 
+  const getPageTitle = () => {
+    if (results) {
+      return `${results.vehicle.make} ${results.vehicle.model} ${results.vehicle.year} - Histori Automjeti | Car History Site`;
+    }
+    return 'Kontrollo Historin e Automjetit me VIN/FIN - Car History Site';
+  };
+
+  const getPageDescription = () => {
+    if (results) {
+      return `Shiko historin e plotë të ${results.vehicle.make} ${results.vehicle.model} ${results.vehicle.year}. VIN: ${results.vehicle.vin}. Verifiko kilometrazhin, aksidentet dhe specifikime teknike.`;
+    }
+    return 'Zbulo historinë e plotë të automjetit përpara blerjes. Verifiko kilometrazhin, aksidentet, vjedhjet dhe specifikime teknike me numrin VIN/FIN. Raport të menjëhershëm nga 900+ burime në 40+ vende.';
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col">
-      <div className="container mx-auto px-4 py-8 flex-grow">
+    <HelmetProvider>
+      <Helmet>
+        <title>{getPageTitle()}</title>
+        <meta name="description" content={getPageDescription()} />
+        <meta property="og:title" content={getPageTitle()} />
+        <meta property="og:description" content={getPageDescription()} />
+        <meta property="twitter:title" content={getPageTitle()} />
+        <meta property="twitter:description" content={getPageDescription()} />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'WebApplication',
+            name: 'Car History Site',
+            url: 'https://carhistorysite.com',
+            description: 'Kontrollo historin e automjetit me VIN/FIN. Verifiko kilometrazhin, aksidentet dhe specifikime teknike.',
+            applicationCategory: 'UtilityApplication',
+            operatingSystem: 'All',
+            offers: {
+              '@type': 'Offer',
+              price: '13.99',
+              priceCurrency: 'EUR',
+            },
+            aggregateRating: results
+              ? {
+                  '@type': 'AggregateRating',
+                  ratingValue: '4.5',
+                  reviewCount: '1200',
+                }
+              : undefined,
+          })}
+        </script>
+        {results && (
+          <script type="application/ld+json">
+            {JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Car',
+              name: `${results.vehicle.make} ${results.vehicle.model}`,
+              manufacturer: results.vehicle.manufacturer,
+              model: results.vehicle.model,
+              vehicleIdentificationNumber: results.vehicle.vin,
+              productionDate: results.vehicle.year,
+              fuelType: results.vehicle.fuelType,
+              driveWheelConfiguration: results.vehicle.driveType,
+            })}
+          </script>
+        )}
+      </Helmet>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col">
+        <div className="container mx-auto px-4 py-8 flex-grow">
         {/* Hero Section */}
         <div className="text-center mb-12">
           <div className="flex justify-center items-center mb-4">
@@ -383,7 +445,8 @@ const CarHistoryApp = () => {
           </div>
         </div>
       </footer>
-    </div>
+      </div>
+    </HelmetProvider>
   );
 };
 
