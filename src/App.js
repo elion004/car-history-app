@@ -4,7 +4,7 @@ import { Search, Car, AlertCircle, Gauge, Wrench, Info, Star, Shield, Clock, Ext
 const PROVIDER = {
   name: 'carVertical',
   urlBase: process.env.REACT_APP_URL_BASE,
-  price: 'nga €4.99',
+  price: 'nga €13.99',
   countries: '40+ vende',
 };
 
