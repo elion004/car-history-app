@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Car, AlertCircle, Gauge, Wrench, Info, Star, Shield, Clock, ExternalLink } from 'lucide-react';
+import { Search, Car, AlertCircle, Gauge, Wrench, Info, Star, Shield, Clock, ExternalLink, Database, Globe, CheckCircle, TrendingDown, FileText } from 'lucide-react';
 
 const PROVIDER = {
   name: 'carVertical',
@@ -117,16 +117,37 @@ const CarHistoryApp = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-      <div className="container mx-auto px-4 py-8">
-        <div className="text-center mb-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col">
+      <div className="container mx-auto px-4 py-8 flex-grow">
+        {/* Hero Section */}
+        <div className="text-center mb-12">
           <div className="flex justify-center items-center mb-4">
             <Car className="h-12 w-12 text-blue-600 mr-3" />
             <h1 className="text-4xl font-bold text-gray-800">Kontrollo Historin e Automjetit</h1>
           </div>
-          <p className="text-gray-600 text-lg">Shkruani numrin e FIN për të marrë historin e plotë të automjetit</p>
+          <p className="text-gray-600 text-xl mb-6">Zbulo historinë e plotë të automjetit përpara blerjes</p>
+
+          {/* Trust Statistics */}
+          <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div className="bg-white rounded-lg shadow-md p-4">
+              <Database className="h-8 w-8 text-blue-600 mx-auto mb-2" />
+              <div className="text-2xl font-bold text-gray-800">900+</div>
+              <div className="text-sm text-gray-600">Burime të dhënash</div>
+            </div>
+            <div className="bg-white rounded-lg shadow-md p-4">
+              <Globe className="h-8 w-8 text-green-600 mx-auto mb-2" />
+              <div className="text-2xl font-bold text-gray-800">{PROVIDER.countries}</div>
+              <div className="text-sm text-gray-600">Vende të mbuluar</div>
+            </div>
+            <div className="bg-white rounded-lg shadow-md p-4">
+              <Clock className="h-8 w-8 text-orange-600 mx-auto mb-2" />
+              <div className="text-2xl font-bold text-gray-800">1 minutë</div>
+              <div className="text-sm text-gray-600">Raport i menjëhershëm</div>
+            </div>
+          </div>
         </div>
 
+        {/* Search Input Section */}
         <div className="max-w-2xl mx-auto mb-8">
           <div className="bg-white rounded-lg shadow-lg p-6">
             <div className="mb-4">
@@ -225,6 +246,50 @@ const CarHistoryApp = () => {
           </div>
         </div>
 
+        {/* Key Features Section */}
+        {!results && (
+          <div className="max-w-6xl mx-auto mb-12">
+            <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">Çfarë mund të zbulosh?</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                <Gauge className="h-10 w-10 text-blue-600 mb-4" />
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">Verifikim Kilometrazhi</h3>
+                <p className="text-gray-600">Zbulo manipulimet e kilometrazhit dhe historinë e vërtetë të përdorimit</p>
+              </div>
+
+              <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                <Wrench className="h-10 w-10 text-orange-600 mb-4" />
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">Historia e Aksidenteve</h3>
+                <p className="text-gray-600">Zbulo dëmtimet e kaluara, riparimet dhe kostot e riparimit</p>
+              </div>
+
+              <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                <Shield className="h-10 w-10 text-red-600 mb-4" />
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">Kontrolli i Vjedhjes</h3>
+                <p className="text-gray-600">Verifiko nëse automjeti është raportuar si i vjedhur</p>
+              </div>
+
+              <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                <FileText className="h-10 w-10 text-green-600 mb-4" />
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">Specifikime Teknike</h3>
+                <p className="text-gray-600">Detaje të plota mbi motorin, karburantin dhe karakteristikat</p>
+              </div>
+
+              <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                <TrendingDown className="h-10 w-10 text-purple-600 mb-4" />
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">Vlerësimi i Tregut</h3>
+                <p className="text-gray-600">Informacion për të shmangur mbipagimin e automjetit</p>
+              </div>
+
+              <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                <CheckCircle className="h-10 w-10 text-teal-600 mb-4" />
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">Siguria & Thirrjet</h3>
+                <p className="text-gray-600">Shiko vlerësimet e sigurisë dhe thirrjet e prodhuesit</p>
+              </div>
+            </div>
+          </div>
+        )}
+
         {results && (
           <div className="max-w-6xl mx-auto space-y-8">
             <div className="bg-white rounded-lg shadow-lg p-6">
@@ -304,6 +369,20 @@ const CarHistoryApp = () => {
           </div>
         )}
       </div>
+
+      {/* Footer */}
+      <footer className="w-full border-t border-gray-300 bg-white/50">
+        <div className="max-w-6xl mx-auto px-4 py-6">
+          <div className="flex flex-col md:flex-row justify-between items-center text-sm text-gray-600">
+            <div className="mb-3 md:mb-0">
+              <p>&copy; {new Date().getFullYear()} Car History Site. Të gjitha të drejtat e rezervuara.</p>
+            </div>
+            <div className="flex items-center space-x-4">
+              <span>🇦🇱 Shqipëri</span>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
