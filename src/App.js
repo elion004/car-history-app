@@ -8,7 +8,7 @@ const PROVIDER = {
   countries: '40+ vende',
 };
 
-const buildPremiumUrl = (vin) => `${PROVIDER.urlBase}${encodeURIComponent(vin)}`;
+const buildPremiumUrl = (vin) => `${PROVIDER.urlBase}${encodeURIComponent(vin)}&voucher=carhistorysite`;
 
 const CarHistoryApp = () => {
   const [finNumber, setFinNumber] = useState('');
