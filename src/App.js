@@ -121,7 +121,7 @@ const CarHistoryApp = () => {
     if (results) {
       return `${results.vehicle.make} ${results.vehicle.model} ${results.vehicle.year} - Histori Automjeti | Car History Site`;
     }
-    return 'Kontrollo Historin e Automjetit me VIN/FIN - Car History Site';
+    return 'Kontrollo Historin e Automjetit - Car History Site';
   };
 
   const getPageDescription = () => {
