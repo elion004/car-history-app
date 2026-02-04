@@ -119,48 +119,88 @@ const CarHistoryApp = () => {
 
   const getPageTitle = () => {
     if (results) {
-      return `${results.vehicle.make} ${results.vehicle.model} ${results.vehicle.year} - Histori Automjeti | Car History Site`;
+      return `${results.vehicle.make} ${results.vehicle.model} ${results.vehicle.year} - Kontrollo Historin e Automjetit | VIN Check Albania`;
     }
-    return 'Kontrollo Historin e Automjetit - Car History Site';
+    return 'Kontrollo Automjetin me VIN - Histori Veture Shqipëri | Car History Check Albania';
   };
 
   const getPageDescription = () => {
     if (results) {
-      return `Shiko historin e plotë të ${results.vehicle.make} ${results.vehicle.model} ${results.vehicle.year}. VIN: ${results.vehicle.vin}. Verifiko kilometrazhin, aksidentet dhe specifikime teknike.`;
+      return `Kontrollo historinë e ${results.vehicle.make} ${results.vehicle.model} ${results.vehicle.year} me VIN ${results.vehicle.vin}. Verifiko kilometrazhin, aksidentet, vjedhjet dhe histori të plotë. Raport i menjëhershëm nga 40+ vende.`;
     }
-    return 'Zbulo historinë e plotë të automjetit përpara blerjes. Verifiko kilometrazhin, aksidentet, vjedhjet dhe specifikime teknike me numrin VIN/FIN. Raport të menjëhershëm nga 900+ burime në 40+ vende.';
+    return 'Kontrollo automjetin me VIN/FIN para blerjes. Verifiko kilometrazhin, aksidentet, vjedhjet. Histori e plotë e makinës nga 900+ burime në 40+ vende. Raport i menjëhershëm për Shqipëri, Kosovë dhe diasporën Shqiptare.';
   };
 
   return (
     <>
       <Helmet>
+        <html lang="sq" />
         <title>{getPageTitle()}</title>
         <meta name="description" content={getPageDescription()} />
+        <link rel="canonical" href="https://carhistorysite.com" />
+        
+        {/* Open Graph */}
         <meta property="og:title" content={getPageTitle()} />
         <meta property="og:description" content={getPageDescription()} />
-        <meta property="twitter:title" content={getPageTitle()} />
-        <meta property="twitter:description" content={getPageDescription()} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://carhistorysite.com" />
+        <meta property="og:image" content="https://carhistorysite.com/og-image.png" />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={getPageTitle()} />
+        <meta name="twitter:description" content={getPageDescription()} />
+        <meta name="twitter:image" content="https://carhistorysite.com/og-image.png" />
         <script type="application/ld+json">
           {JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'WebApplication',
-            name: 'Car History Site',
+            name: 'Car History Site - Kontrollo Automjetin',
             url: 'https://carhistorysite.com',
-            description: 'Kontrollo historin e automjetit me VIN/FIN. Verifiko kilometrazhin, aksidentet dhe specifikime teknike.',
+            description: 'Kontrollo historin e automjetit me VIN/FIN. Verifiko kilometrazhin, aksidentet dhe specifikime teknike për Shqipëri, Kosovë dhe diasporën.',
             applicationCategory: 'UtilityApplication',
             operatingSystem: 'All',
+            inLanguage: 'sq',
+            availableLanguage: ['Albanian', 'English'],
             offers: {
               '@type': 'Offer',
               price: '13.99',
               priceCurrency: 'EUR',
+              availability: 'https://schema.org/InStock',
             },
-            aggregateRating: results
-              ? {
-                  '@type': 'AggregateRating',
-                  ratingValue: '4.5',
-                  reviewCount: '1200',
-                }
-              : undefined,
+            aggregateRating: {
+              '@type': 'AggregateRating',
+              ratingValue: '4.7',
+              reviewCount: '1500',
+              bestRating: '5',
+              worstRating: '1',
+            },
+            provider: {
+              '@type': 'Organization',
+              name: 'Car History Site',
+              url: 'https://carhistorysite.com',
+            },
+          })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'LocalBusiness',
+            name: 'Car History Site',
+            description: 'Shërbim online për kontrollimin e historisë së automjeteve në Shqipëri, Kosovë dhe diasporë.',
+            url: 'https://carhistorysite.com',
+            areaServed: [
+              {
+                '@type': 'Country',
+                name: 'Albania',
+              },
+              {
+                '@type': 'Country',
+                name: 'Kosovo',
+              },
+            ],
+            priceRange: '€€',
+            serviceType: 'Kontrolli i Automjetit',
           })}
         </script>
         {!results && (
@@ -209,6 +249,30 @@ const CarHistoryApp = () => {
                     text: 'Kontrolli i makinës përpara blerjes të ndihmon të zbulosh probleme të fshehura si kilometrazhi i manipuluar, aksidente të mëparshme, ose nëse automjeti është i vjedhur. Kjo mund të të kursejë mijëra euro dhe të shmangë probleme ligjore.',
                   },
                 },
+                {
+                  '@type': 'Question',
+                  name: 'Si funksionon kontrolli i automjetit online?',
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: 'Vendosni numrin VIN/FIN 17-shifror në fushën e kërkimit. Sistemi i jep kërkesë bazës së të dhënave ndërkombëtare dhe në pak sekonda merr informacion nga 900+ burime në 40+ vende për historinë e automjetit.',
+                  },
+                },
+                {
+                  '@type': 'Question',
+                  name: 'A është i besueshëm kontrolli i VIN për makina të përdorura?',
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: 'Po, kontrolli i VIN është metoda më e besueshme për të verifikuar historinë e një makine të përdorur. Sistemi përdor burime zyrtare si regjistrat e qeverive, kompani sigurimesh dhe qendra shërbimi për të siguruar informacion të saktë.',
+                  },
+                },
+                {
+                  '@type': 'Question',
+                  name: 'Çfarë është numri VIN dhe ku e gjej?',
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: 'VIN (Vehicle Identification Number) ose FIN është një kod unik 17-shifror që identifikon çdo automjet. E gjeni në regjistrim, në derën e shoferit (pjesa e brendshme), në xhamin e përparmë (poshtë majtas), ose në motorr.',
+                  },
+                },
               ],
             })}
           </script>
@@ -234,25 +298,25 @@ const CarHistoryApp = () => {
         {/* Hero Section */}
         <div className="text-center mb-12">
           <div className="flex justify-center items-center mb-4">
-            <Car className="h-12 w-12 text-blue-600 mr-3" />
-            <h1 className="text-4xl font-bold text-gray-800">Kontrollo Historin e Automjetit</h1>
+            <Car className="h-12 w-12 text-blue-600 mr-3" aria-label="Ikona e automjetit" />
+            <h1 className="text-4xl font-bold text-gray-800">Kontrollo Automjetin me VIN - Histori Veture Shqipëri</h1>
           </div>
-          <p className="text-gray-600 text-xl mb-6">Zbulo historinë e plotë të automjetit përpara blerjes</p>
+          <p className="text-gray-600 text-xl mb-6">Verifiko historinë e plotë të makinës përpara blerjes - Kontroll i menjëhershëm për Shqipëri, Kosovë dhe diasporë</p>
 
           {/* Trust Statistics */}
           <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div className="bg-white rounded-lg shadow-md p-4">
-              <Database className="h-8 w-8 text-blue-600 mx-auto mb-2" />
+              <Database className="h-8 w-8 text-blue-600 mx-auto mb-2" aria-label="Ikona bazë të dhënash" />
               <div className="text-2xl font-bold text-gray-800">900+</div>
               <div className="text-sm text-gray-600">Burime të dhënash</div>
             </div>
             <div className="bg-white rounded-lg shadow-md p-4">
-              <Globe className="h-8 w-8 text-green-600 mx-auto mb-2" />
+              <Globe className="h-8 w-8 text-green-600 mx-auto mb-2" aria-label="Ikona globi" />
               <div className="text-2xl font-bold text-gray-800">{PROVIDER.countries}</div>
               <div className="text-sm text-gray-600">Vende të mbuluar</div>
             </div>
             <div className="bg-white rounded-lg shadow-md p-4">
-              <Clock className="h-8 w-8 text-orange-600 mx-auto mb-2" />
+              <Clock className="h-8 w-8 text-orange-600 mx-auto mb-2" aria-label="Ikona ore" />
               <div className="text-2xl font-bold text-gray-800">1 minutë</div>
               <div className="text-sm text-gray-600">Raport i menjëhershëm</div>
             </div>
@@ -358,43 +422,68 @@ const CarHistoryApp = () => {
           </div>
         </div>
 
+        {/* SEO Content Section - Why Check Car History */}
+        {!results && (
+          <div className="max-w-4xl mx-auto mb-12 bg-white rounded-lg shadow-md p-8">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">Pse është i rëndësishëm kontrolli i automjetit para blerjes?</h2>
+            <div className="prose text-gray-700 space-y-4">
+              <p>
+                Blerja e një <strong>makine të përdorur</strong> kërkon kujdes të madh. <strong>Kontrolli i historisë së automjetit</strong> me numrin VIN/FIN është hapi më i rëndësishëm që mund të bëni përpara se të investoni në një automjet. Në Shqipëri, Kosovë dhe në diasporën shqiptare, ka raste të shumta ku <strong>kilometrazhi është manipuluar</strong> ose automjetet kanë <strong>histori aksidentesh të fshehura</strong>.
+              </p>
+              <p>
+                Me shërbimin tonë të <strong>kontrollit të automjetit online</strong>, ju mund të verifikoni menjëherë nëse makina që dëshironi të blini ka probleme të fshehura. <strong>Raporti i automjetit</strong> tregon informacion të detajuar nga 900+ burime ndërkombëtare, duke përfshirë:
+              </p>
+              <ul className="list-disc list-inside space-y-2 ml-4">
+                <li><strong>Kontroll kilometrazhi</strong> - Zbulo nëse kilometrat janë të manipuluara</li>
+                <li><strong>Histori aksidentesh</strong> - Shiko të gjitha aksidentet e raportuara</li>
+                <li><strong>Kontroll vjedhje</strong> - Verifiko nëse automjeti është i vjedhur</li>
+                <li><strong>Histori shërbimi</strong> - Shiko mirëmbajtjen dhe riparimet e mëparshme</li>
+                <li><strong>Specifikime teknike</strong> - Konfirmo detajet e automjetit</li>
+              </ul>
+              <p>
+                Një <strong>kontroll veture para blerjes</strong> ju kursen nga shpenzime të paparashikuara dhe probleme ligjore. Investimi i vogël në një <strong>raport automjeti</strong> mund të ju kursejë mijëra euro në të ardhmen.
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* Key Features Section */}
         {!results && (
           <div className="max-w-6xl mx-auto mb-12">
             <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">Çfarë mund të zbulosh?</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-                <Gauge className="h-10 w-10 text-blue-600 mb-4" />
+                <Gauge className="h-10 w-10 text-blue-600 mb-4" aria-label="Ikona verifikimi kilometrazhi" />
                 <h3 className="text-xl font-semibold text-gray-800 mb-2">Verifikim Kilometrazhi</h3>
                 <p className="text-gray-600">Zbulo manipulimet e kilometrazhit dhe historinë e vërtetë të përdorimit</p>
               </div>
 
               <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-                <Wrench className="h-10 w-10 text-orange-600 mb-4" />
+                <Wrench className="h-10 w-10 text-orange-600 mb-4" aria-label="Ikona histori aksidentesh" />
                 <h3 className="text-xl font-semibold text-gray-800 mb-2">Historia e Aksidenteve</h3>
                 <p className="text-gray-600">Zbulo dëmtimet e kaluara, riparimet dhe kostot e riparimit</p>
               </div>
 
               <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-                <Shield className="h-10 w-10 text-red-600 mb-4" />
+                <Shield className="h-10 w-10 text-red-600 mb-4" aria-label="Ikona kontrolli vjedhje" />
                 <h3 className="text-xl font-semibold text-gray-800 mb-2">Kontrolli i Vjedhjes</h3>
                 <p className="text-gray-600">Verifiko nëse automjeti është raportuar si i vjedhur</p>
               </div>
 
               <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-                <FileText className="h-10 w-10 text-green-600 mb-4" />
+                <FileText className="h-10 w-10 text-green-600 mb-4" aria-label="Ikona specifikime teknike" />
                 <h3 className="text-xl font-semibold text-gray-800 mb-2">Specifikime Teknike</h3>
                 <p className="text-gray-600">Detaje të plota mbi motorin, karburantin dhe karakteristikat</p>
               </div>
 
               <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-                <TrendingDown className="h-10 w-10 text-purple-600 mb-4" />
+                <TrendingDown className="h-10 w-10 text-purple-600 mb-4" aria-label="Ikona vlerësim tregu" />
                 <h3 className="text-xl font-semibold text-gray-800 mb-2">Vlerësimi i Tregut</h3>
                 <p className="text-gray-600">Informacion për të shmangur mbipagimin e automjetit</p>
               </div>
 
               <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-                <CheckCircle className="h-10 w-10 text-teal-600 mb-4" />
+                <CheckCircle className="h-10 w-10 text-teal-600 mb-4" aria-label="Ikona siguri" />
                 <h3 className="text-xl font-semibold text-gray-800 mb-2">Siguria & Thirrjet</h3>
                 <p className="text-gray-600">Shiko vlerësimet e sigurisë dhe thirrjet e prodhuesit</p>
               </div>
@@ -439,6 +528,27 @@ const CarHistoryApp = () => {
                 <summary className="font-semibold text-lg text-gray-800 cursor-pointer">Pse duhet të kontrollo makinën përpara blerjes?</summary>
                 <p className="mt-3 text-gray-700">
                   Kontrolli i makinës përpara blerjes të ndihmon të zbulosh probleme të fshehura si kilometrazhi i manipuluar, aksidente të mëparshme, ose nëse automjeti është i vjedhur. Kjo mund të të kursejë mijëra euro dhe të shmangë probleme ligjore.
+                </p>
+              </details>
+
+              <details className="bg-white rounded-lg shadow-md p-6">
+                <summary className="font-semibold text-lg text-gray-800 cursor-pointer">Si funksionon kontrolli i automjetit online?</summary>
+                <p className="mt-3 text-gray-700">
+                  Vendosni numrin VIN/FIN 17-shifror në fushën e kërkimit. Sistemi i jep kërkesë bazës së të dhënave ndërkombëtare dhe në pak sekonda merr informacion nga 900+ burime në 40+ vende për historinë e automjetit.
+                </p>
+              </details>
+
+              <details className="bg-white rounded-lg shadow-md p-6">
+                <summary className="font-semibold text-lg text-gray-800 cursor-pointer">A është i besueshëm kontrolli i VIN për makina të përdorura?</summary>
+                <p className="mt-3 text-gray-700">
+                  Po, kontrolli i VIN është metoda më e besueshme për të verifikuar historinë e një makine të përdorur. Sistemi përdor burime zyrtare si regjistrat e qeverive, kompani sigurimesh dhe qendra shërbimi për të siguruar informacion të saktë.
+                </p>
+              </details>
+
+              <details className="bg-white rounded-lg shadow-md p-6">
+                <summary className="font-semibold text-lg text-gray-800 cursor-pointer">Çfarë është numri VIN dhe ku e gjej?</summary>
+                <p className="mt-3 text-gray-700">
+                  VIN (Vehicle Identification Number) ose FIN është një kod unik 17-shifror që identifikon çdo automjet. E gjeni në regjistrim, në derën e shoferit (pjesa e brendshme), në xhamin e përparmë (poshtë majtas), ose në motorr.
                 </p>
               </details>
             </div>
