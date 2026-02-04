@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Car, AlertCircle, Gauge, Wrench, Info, Star, Shield, Clock, ExternalLink, Database, Globe, CheckCircle, TrendingDown, FileText } from 'lucide-react';
+import { Search, Car, AlertCircle, Gauge, Wrench, Star, Shield, Clock, ExternalLink, Database, Globe, CheckCircle, TrendingDown, FileText } from 'lucide-react';
 import { Helmet } from 'react-helmet';
 
 const PROVIDER = {
