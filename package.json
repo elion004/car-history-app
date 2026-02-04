@@ -24,12 +24,12 @@
     "eject": "react-scripts eject"
   },
   "reactSnap": {
-    "inlineCss": true,
+    "inlineCss": false,
     "minifyHtml": {
       "collapseWhitespace": true,
       "removeComments": true
     },
-    "skipThirdPartyRequests": true,
+    "skipThirdPartyRequests": false,
     "cacheAjaxRequests": false
   },
   "eslintConfig": {
