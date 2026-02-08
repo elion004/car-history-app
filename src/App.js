@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet';
 const PROVIDER = {
   name: 'carVertical',
   urlBase: process.env.REACT_APP_URL_BASE,
-  price: 'nga €13.99',
+  price: 'nga €20.79',
   countries: '40+ vende',
 };
 
@@ -23,13 +23,15 @@ const CarHistoryApp = () => {
     return finRegex.test(fin.toUpperCase());
   };
 
-  const handleSubmit = async () => {
-    if (!finNumber.trim()) {
+  const handleSubmit = async (vinOverride) => {
+    const vin = (typeof vinOverride === 'string' && vinOverride) ? vinOverride : finNumber;
+
+    if (!vin.trim()) {
       setError('Ju lutem shkruani numrin e FIN');
       return;
     }
 
-    if (!validateFIN(finNumber)) {
+    if (!validateFIN(vin)) {
       setError('Numri i FIN është i pavlefshëm. Duhet të ketë 17 karaktere (A-Z, 0-9, pa I, O, Q)');
       return;
     }
@@ -39,7 +41,7 @@ const CarHistoryApp = () => {
 
     try {
       const response = await fetch(
-        `https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVin/${finNumber}?format=json`
+        `https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVin/${vin}?format=json`
       );
 
       if (!response.ok) {
@@ -64,7 +66,7 @@ const CarHistoryApp = () => {
           make: findValue('Make'),
           model: findValue('Model'),
           year: findValue('Model Year'),
-          vin: finNumber.toUpperCase(),
+          vin: vin.toUpperCase(),
           bodyClass: findValue('Body Class'),
           enginePower: findValue('Engine Power (kW)'),
           fuelType: findValue('Fuel Type - Primary'),
@@ -121,7 +123,7 @@ const CarHistoryApp = () => {
     if (results) {
       return `${results.vehicle.make} ${results.vehicle.model} ${results.vehicle.year} - Kontrollo Historin e Automjetit | VIN Check Albania`;
     }
-    return 'Kontrollo Automjetin me VIN - Histori Veture Shqipëri | Car History Check Albania';
+    return 'Kontrollo Automjetin me VIN - Histori Veture | Car History Check';
   };
 
   const getPageDescription = () => {
@@ -164,7 +166,7 @@ const CarHistoryApp = () => {
             availableLanguage: ['Albanian', 'English'],
             offers: {
               '@type': 'Offer',
-              price: '13.99',
+              price: '20.79',
               priceCurrency: 'EUR',
               availability: 'https://schema.org/InStock',
             },
@@ -299,7 +301,7 @@ const CarHistoryApp = () => {
         <div className="text-center mb-12">
           <div className="flex justify-center items-center mb-4">
             <Car className="h-12 w-12 text-blue-600 mr-3" aria-label="Ikona e automjetit" />
-            <h1 className="text-4xl font-bold text-gray-800">Kontrollo Automjetin me VIN - Histori Veture Shqipëri</h1>
+            <h1 className="text-4xl font-bold text-gray-800">Kontrollo Automjetin me VIN - Histori Veture</h1>
           </div>
           <p className="text-gray-600 text-xl mb-6">Verifiko historinë e plotë të makinës përpara blerjes - Kontroll i menjëhershëm për Shqipëri, Kosovë dhe diasporë</p>
 
@@ -370,6 +372,20 @@ const CarHistoryApp = () => {
                   </>
                 )}
               </button>
+
+              {!results && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    const previewVin = 'JT3HT05J5Y0088443';
+                    setFinNumber(previewVin);
+                    handleSubmit(previewVin);
+                  }}
+                  className="px-6 py-3 border border-blue-300 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 font-medium"
+                >
+                  Shembull VIN
+                </button>
+              )}
 
               {results && (
                 <button
