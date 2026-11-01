@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Car, AlertCircle, Gauge, Wrench, Star, Shield, Clock, ExternalLink, Database, Globe, CheckCircle, TrendingDown, FileText } from 'lucide-react';
+import { Search, Car, AlertCircle, Gauge, Wrench, Star, Shield, Clock, ExternalLink, Database, Globe, CheckCircle, TrendingDown, FileText, ChevronDown } from 'lucide-react';
 import { Helmet } from 'react-helmet';
 
 const PROVIDER = {
@@ -11,12 +11,48 @@ const PROVIDER = {
 
 const buildPremiumUrl = (vin) => `${PROVIDER.urlBase}${encodeURIComponent(vin)}&voucher=carhistorysite`;
 
+const faqs = [
+  {
+    q: 'Si mund të kontrollo automjetin me VIN?',
+    a: 'Për të kontrolluar automjetin, gjeni numrin VIN/FIN 17-shifror të automjetit (zakonisht gjendet në regjistrim, në derën e shoferit ose në xhamin e përparmë). Vendosni numrin në fushën e kërkimit dhe klikoni "Kontrollo Tani" për rezultate të menjëhershme.',
+  },
+  {
+    q: 'Çfarë informacioni shfaq kontrolli i automjetit?',
+    a: 'Kontrolli i automjetit tregon specifikime teknike, historinë e aksidenteve, verifikimin e kilometrazhit, kontrollin e vjedhjes, dhe informacion për riparimet. Raporti premium ofron të dhëna nga 40+ vende dhe 900+ burime.',
+  },
+  {
+    q: 'A është i sigurt kontrolli i automjetit online?',
+    a: 'Po, kontrolli i automjetit është plotësisht i sigurt. Përdorim burime zyrtare dhe të verifikuara për të siguruar informacion të saktë dhe të besueshëm mbi historinë e automjetit.',
+  },
+  {
+    q: 'Sa kushton të kontrollosh një automjet?',
+    a: 'Kontrolli bazik i automjetit është falas dhe tregon informacion të përgjithshëm. Raporti i plotë premium, që përfshin historinë e detajuar të aksidenteve dhe kilometrazhit, kushton nga €13.99.',
+  },
+  {
+    q: 'Pse duhet të kontrollo makinën përpara blerjes?',
+    a: 'Kontrolli i makinës përpara blerjes të ndihmon të zbulosh probleme të fshehura si kilometrazhi i manipuluar, aksidente të mëparshme, ose nëse automjeti është i vjedhur. Kjo mund të të kursejë mijëra euro dhe të shmangë probleme ligjore.',
+  },
+  {
+    q: 'Si funksionon kontrolli i automjetit online?',
+    a: 'Vendosni numrin VIN/FIN 17-shifror në fushën e kërkimit. Sistemi i jep kërkesë bazës së të dhënave ndërkombëtare dhe në pak sekonda merr informacion nga 900+ burime në 40+ vende për historinë e automjetit.',
+  },
+  {
+    q: 'A është i besueshëm kontrolli i VIN për makina të përdorura?',
+    a: 'Po, kontrolli i VIN është metoda më e besueshme për të verifikuar historinë e një makine të përdorur. Sistemi përdor burime zyrtare si regjistrat e qeverive, kompani sigurimesh dhe qendra shërbimi për të siguruar informacion të saktë.',
+  },
+  {
+    q: 'Çfarë është numri VIN dhe ku e gjej?',
+    a: 'VIN (Vehicle Identification Number) ose FIN është një kod unik 17-shifror që identifikon çdo automjet. E gjeni në regjistrim, në derën e shoferit (pjesa e brendshme), në xhamin e përparmë (poshtë majtas), ose në motorr.',
+  },
+];
+
 const CarHistoryApp = () => {
   const [finNumber, setFinNumber] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [results, setResults] = useState(null);
   const [showPremiumOption, setShowPremiumOption] = useState(false);
+  const [openFaq, setOpenFaq] = useState(null);
 
   const validateFIN = (fin) => {
     const finRegex = /^[A-HJ-NPR-Z0-9]{17}$/;
@@ -140,14 +176,14 @@ const CarHistoryApp = () => {
         <title>{getPageTitle()}</title>
         <meta name="description" content={getPageDescription()} />
         <link rel="canonical" href="https://carhistorysite.com" />
-        
+
         {/* Open Graph */}
         <meta property="og:title" content={getPageTitle()} />
         <meta property="og:description" content={getPageDescription()} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://carhistorysite.com" />
         <meta property="og:image" content="https://carhistorysite.com/og-image.png" />
-        
+
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={getPageTitle()} />
@@ -169,13 +205,6 @@ const CarHistoryApp = () => {
               price: '20.79',
               priceCurrency: 'EUR',
               availability: 'https://schema.org/InStock',
-            },
-            aggregateRating: {
-              '@type': 'AggregateRating',
-              ratingValue: '4.7',
-              reviewCount: '1500',
-              bestRating: '5',
-              worstRating: '1',
             },
             provider: {
               '@type': 'Organization',
@@ -205,6 +234,20 @@ const CarHistoryApp = () => {
             serviceType: 'Kontrolli i Automjetit',
           })}
         </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Kontrollo Automjetin',
+                item: 'https://carhistorysite.com',
+              },
+            ],
+          })}
+        </script>
         {!results && (
           <script type="application/ld+json">
             {JSON.stringify({
@@ -216,7 +259,7 @@ const CarHistoryApp = () => {
                   name: 'Si mund të kontrollo automjetin me VIN?',
                   acceptedAnswer: {
                     '@type': 'Answer',
-                    text: 'Për të kontrolluar automjetin, gjeni numrin VIN/FIN 17-shifror të automjetit (zakonisht gjendet në regjistrim, në derën e shoferit ose në xhamin e përparmë). Vendosni numrin në fushën e kërkimit dhe klikoni "Kërko Historia" për rezultate të menjëhershme.',
+                    text: 'Për të kontrolluar automjetin, gjeni numrin VIN/FIN 17-shifror të automjetit (zakonisht gjendet në regjistrim, në derën e shoferit ose në xhamin e përparmë). Vendosni numrin në fushën e kërkimit dhe klikoni "Kontrollo Tani" për rezultate të menjëhershme.',
                   },
                 },
                 {
@@ -279,6 +322,36 @@ const CarHistoryApp = () => {
             })}
           </script>
         )}
+        {!results && (
+          <script type="application/ld+json">
+            {JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'HowTo',
+              name: 'Si të kontrollosh historinë e automjetit me VIN',
+              description: 'Udhëzues hap pas hapi për të kontrolluar historinë e automjetit tuaj',
+              step: [
+                {
+                  '@type': 'HowToStep',
+                  position: 1,
+                  name: 'Gjeni numrin VIN',
+                  text: 'Gjeni numrin VIN/FIN 17-shifror të automjetit — në regjistrim, derën e shoferit ose xhamin e përparmë.',
+                },
+                {
+                  '@type': 'HowToStep',
+                  position: 2,
+                  name: 'Vendosni VIN-in',
+                  text: "Shkruani numrin VIN në fushën e kërkimit dhe klikoni 'Kontrollo Tani'.",
+                },
+                {
+                  '@type': 'HowToStep',
+                  position: 3,
+                  name: 'Merrni raportin',
+                  text: 'Brenda 60 sekondave merrni specifikime teknike falas dhe opsionin për raport të plotë premium.',
+                },
+              ],
+            })}
+          </script>
+        )}
         {results && (
           <script type="application/ld+json">
             {JSON.stringify({
@@ -295,39 +368,36 @@ const CarHistoryApp = () => {
           </script>
         )}
       </Helmet>
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col">
-        <div className="container mx-auto px-4 py-8 flex-grow">
-        {/* Hero Section */}
-        <div className="text-center mb-12">
-          <div className="flex justify-center items-center mb-4">
-            <Car className="h-12 w-12 text-blue-600 mr-3" aria-label="Ikona e automjetit" />
-            <h1 className="text-4xl font-bold text-gray-800">Kontrollo Automjetin me VIN - Histori Veture</h1>
-          </div>
-          <p className="text-gray-600 text-xl mb-6">Verifiko historinë e plotë të makinës përpara blerjes - Kontroll i menjëhershëm për Shqipëri, Kosovë dhe diasporë</p>
+      <div className="min-h-screen bg-slate-50 flex flex-col">
 
-          {/* Trust Statistics */}
-          <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div className="bg-white rounded-lg shadow-md p-4">
-              <Database className="h-8 w-8 text-blue-600 mx-auto mb-2" aria-label="Ikona bazë të dhënash" />
-              <div className="text-2xl font-bold text-gray-800">900+</div>
-              <div className="text-sm text-gray-600">Burime të dhënash</div>
+        {/* Hero Section */}
+        <section className="w-full bg-gradient-to-r from-blue-900 to-blue-700 text-white py-16 px-4 mb-0">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="flex justify-center items-center mb-4">
+              <Car className="h-12 w-12 text-amber-400 mr-3" aria-hidden="true" />
+              <h1 className="text-4xl md:text-5xl font-extrabold leading-tight">
+                Kontrollo Automjetin me VIN
+              </h1>
             </div>
-            <div className="bg-white rounded-lg shadow-md p-4">
-              <Globe className="h-8 w-8 text-green-600 mx-auto mb-2" aria-label="Ikona globi" />
-              <div className="text-2xl font-bold text-gray-800">{PROVIDER.countries}</div>
-              <div className="text-sm text-gray-600">Vende të mbuluar</div>
-            </div>
-            <div className="bg-white rounded-lg shadow-md p-4">
-              <Clock className="h-8 w-8 text-orange-600 mx-auto mb-2" aria-label="Ikona ore" />
-              <div className="text-2xl font-bold text-gray-800">1 minutë</div>
-              <div className="text-sm text-gray-600">Raport i menjëhershëm</div>
+            <p className="text-blue-100 text-lg md:text-xl mb-2 max-w-2xl mx-auto">
+              Histori e plotë e makinës — aksidente, kilometrazh, vjedhje — në 60 sekonda
+            </p>
+            <p className="text-blue-200 text-sm mb-8">
+              Shërbim i besuar nga blerës makine në Shqipëri, Kosovë dhe diasporë
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-6 text-sm font-medium">
+              <span className="flex items-center gap-1"><Database className="h-4 w-4 text-amber-400" />900+ burime</span>
+              <span className="flex items-center gap-1"><Globe className="h-4 w-4 text-amber-400" />40+ vende</span>
+              <span className="flex items-center gap-1"><Clock className="h-4 w-4 text-amber-400" />Raport në 1 minutë</span>
             </div>
           </div>
-        </div>
+        </section>
+
+        <div className="container mx-auto px-4 py-8 flex-grow">
 
         {/* Search Input Section */}
-        <div className="max-w-2xl mx-auto mb-8">
-          <div className="bg-white rounded-lg shadow-lg p-6">
+        <div className="max-w-2xl mx-auto mt-8 mb-8">
+          <div className="bg-white rounded-2xl shadow-xl p-6 border-t-4 border-blue-700">
             <div className="mb-4">
               <label htmlFor="fin" className="block text-sm font-medium text-gray-700 mb-2">
                 Numri FIN (VIN)
@@ -358,7 +428,7 @@ const CarHistoryApp = () => {
               <button
                 onClick={handleSubmit}
                 disabled={loading}
-                className="flex-1 bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center font-medium"
+                className="flex-1 bg-blue-700 hover:bg-blue-800 text-white py-3 px-6 rounded-xl font-semibold text-base shadow-md disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
               >
                 {loading ? (
                   <>
@@ -368,7 +438,7 @@ const CarHistoryApp = () => {
                 ) : (
                   <>
                     <Search className="h-5 w-5 mr-2" />
-                    Kërko Historia
+                    Kontrollo Tani
                   </>
                 )}
               </button>
@@ -438,10 +508,18 @@ const CarHistoryApp = () => {
           </div>
         </div>
 
+        {/* Trust Strip */}
+        {!results && (
+          <div className="max-w-2xl mx-auto mb-8 flex flex-col sm:flex-row items-center justify-center gap-4 text-sm text-slate-500">
+            <span className="flex items-center gap-1"><CheckCircle className="h-4 w-4 text-green-500" />SSL i sigurt</span>
+            <span className="flex items-center gap-1"><Shield className="h-4 w-4 text-blue-600" />Burime zyrtare</span>
+          </div>
+        )}
+
         {/* SEO Content Section - Why Check Car History */}
         {!results && (
           <div className="max-w-4xl mx-auto mb-12 bg-white rounded-lg shadow-md p-8">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">Pse është i rëndësishëm kontrolli i automjetit para blerjes?</h2>
+            <h2 className="text-2xl font-bold text-slate-900 mb-4">Pse është i rëndësishëm kontrolli i automjetit para blerjes?</h2>
             <div className="prose text-gray-700 space-y-4">
               <p>
                 Blerja e një <strong>makine të përdorur</strong> kërkon kujdes të madh. <strong>Kontrolli i historisë së automjetit</strong> me numrin VIN/FIN është hapi më i rëndësishëm që mund të bëni përpara se të investoni në një automjet. Në Shqipëri, Kosovë dhe në diasporën shqiptare, ka raste të shumta ku <strong>kilometrazhi është manipuluar</strong> ose automjetet kanë <strong>histori aksidentesh të fshehura</strong>.
@@ -468,39 +546,51 @@ const CarHistoryApp = () => {
           <div className="max-w-6xl mx-auto mb-12">
             <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">Çfarë mund të zbulosh?</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-                <Gauge className="h-10 w-10 text-blue-600 mb-4" aria-label="Ikona verifikimi kilometrazhi" />
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">Verifikim Kilometrazhi</h3>
+              <div className="bg-white rounded-2xl shadow-md p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-200 border border-slate-100">
+                <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-blue-50 mb-4">
+                  <Gauge className="h-7 w-7 text-blue-700" aria-label="Ikona verifikimi kilometrazhi" />
+                </div>
+                <h3 className="text-lg font-bold text-slate-800 mb-2">Verifikim Kilometrazhi</h3>
                 <p className="text-gray-600">Zbulo manipulimet e kilometrazhit dhe historinë e vërtetë të përdorimit</p>
               </div>
 
-              <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-                <Wrench className="h-10 w-10 text-orange-600 mb-4" aria-label="Ikona histori aksidentesh" />
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">Historia e Aksidenteve</h3>
+              <div className="bg-white rounded-2xl shadow-md p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-200 border border-slate-100">
+                <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-orange-50 mb-4">
+                  <Wrench className="h-7 w-7 text-orange-600" aria-label="Ikona histori aksidentesh" />
+                </div>
+                <h3 className="text-lg font-bold text-slate-800 mb-2">Historia e Aksidenteve</h3>
                 <p className="text-gray-600">Zbulo dëmtimet e kaluara, riparimet dhe kostot e riparimit</p>
               </div>
 
-              <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-                <Shield className="h-10 w-10 text-red-600 mb-4" aria-label="Ikona kontrolli vjedhje" />
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">Kontrolli i Vjedhjes</h3>
+              <div className="bg-white rounded-2xl shadow-md p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-200 border border-slate-100">
+                <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-red-50 mb-4">
+                  <Shield className="h-7 w-7 text-red-600" aria-label="Ikona kontrolli vjedhje" />
+                </div>
+                <h3 className="text-lg font-bold text-slate-800 mb-2">Kontrolli i Vjedhjes</h3>
                 <p className="text-gray-600">Verifiko nëse automjeti është raportuar si i vjedhur</p>
               </div>
 
-              <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-                <FileText className="h-10 w-10 text-green-600 mb-4" aria-label="Ikona specifikime teknike" />
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">Specifikime Teknike</h3>
+              <div className="bg-white rounded-2xl shadow-md p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-200 border border-slate-100">
+                <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-green-50 mb-4">
+                  <FileText className="h-7 w-7 text-green-600" aria-label="Ikona specifikime teknike" />
+                </div>
+                <h3 className="text-lg font-bold text-slate-800 mb-2">Specifikime Teknike</h3>
                 <p className="text-gray-600">Detaje të plota mbi motorin, karburantin dhe karakteristikat</p>
               </div>
 
-              <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-                <TrendingDown className="h-10 w-10 text-purple-600 mb-4" aria-label="Ikona vlerësim tregu" />
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">Vlerësimi i Tregut</h3>
+              <div className="bg-white rounded-2xl shadow-md p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-200 border border-slate-100">
+                <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-purple-50 mb-4">
+                  <TrendingDown className="h-7 w-7 text-purple-600" aria-label="Ikona vlerësim tregu" />
+                </div>
+                <h3 className="text-lg font-bold text-slate-800 mb-2">Vlerësimi i Tregut</h3>
                 <p className="text-gray-600">Informacion për të shmangur mbipagimin e automjetit</p>
               </div>
 
-              <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-                <CheckCircle className="h-10 w-10 text-teal-600 mb-4" aria-label="Ikona siguri" />
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">Siguria & Thirrjet</h3>
+              <div className="bg-white rounded-2xl shadow-md p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-200 border border-slate-100">
+                <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-teal-50 mb-4">
+                  <CheckCircle className="h-7 w-7 text-teal-600" aria-label="Ikona siguri" />
+                </div>
+                <h3 className="text-lg font-bold text-slate-800 mb-2">Siguria & Thirrjet</h3>
                 <p className="text-gray-600">Shiko vlerësimet e sigurisë dhe thirrjet e prodhuesit</p>
               </div>
             </div>
@@ -512,61 +602,25 @@ const CarHistoryApp = () => {
           <div className="max-w-4xl mx-auto mb-12">
             <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">Pyetje të Shpeshta</h2>
             <div className="space-y-4">
-              <details className="bg-white rounded-lg shadow-md p-6">
-                <summary className="font-semibold text-lg text-gray-800 cursor-pointer">Si mund të kontrollo automjetin me VIN?</summary>
-                <p className="mt-3 text-gray-700">
-                  Për të kontrolluar automjetin, gjeni numrin VIN/FIN 17-shifror të automjetit (zakonisht gjendet në regjistrim, në derën e shoferit ose në xhamin e përparmë). Vendosni numrin në fushën e kërkimit dhe klikoni "Kërko Historia" për rezultate të menjëhershme.
-                </p>
-              </details>
-
-              <details className="bg-white rounded-lg shadow-md p-6">
-                <summary className="font-semibold text-lg text-gray-800 cursor-pointer">Çfarë informacioni shfaq kontrolli i automjetit?</summary>
-                <p className="mt-3 text-gray-700">
-                  Kontrolli i automjetit tregon specifikime teknike, historinë e aksidenteve, verifikimin e kilometrazhit, kontrollin e vjedhjes, dhe informacion për riparimet. Raporti premium ofron të dhëna nga 40+ vende dhe 900+ burime.
-                </p>
-              </details>
-
-              <details className="bg-white rounded-lg shadow-md p-6">
-                <summary className="font-semibold text-lg text-gray-800 cursor-pointer">A është i sigurt kontrolli i automjetit online?</summary>
-                <p className="mt-3 text-gray-700">
-                  Po, kontrolli i automjetit është plotësisht i sigurt. Përdorim burime zyrtare dhe të verifikuara për të siguruar informacion të saktë dhe të besueshëm mbi historinë e automjetit.
-                </p>
-              </details>
-
-              <details className="bg-white rounded-lg shadow-md p-6">
-                <summary className="font-semibold text-lg text-gray-800 cursor-pointer">Sa kushton të kontrollosh një automjet?</summary>
-                <p className="mt-3 text-gray-700">
-                  Kontrolli bazik i automjetit është falas dhe tregon informacion të përgjithshëm. Raporti i plotë premium, që përfshin historinë e detajuar të aksidenteve dhe kilometrazhit, kushton nga €13.99.
-                </p>
-              </details>
-
-              <details className="bg-white rounded-lg shadow-md p-6">
-                <summary className="font-semibold text-lg text-gray-800 cursor-pointer">Pse duhet të kontrollo makinën përpara blerjes?</summary>
-                <p className="mt-3 text-gray-700">
-                  Kontrolli i makinës përpara blerjes të ndihmon të zbulosh probleme të fshehura si kilometrazhi i manipuluar, aksidente të mëparshme, ose nëse automjeti është i vjedhur. Kjo mund të të kursejë mijëra euro dhe të shmangë probleme ligjore.
-                </p>
-              </details>
-
-              <details className="bg-white rounded-lg shadow-md p-6">
-                <summary className="font-semibold text-lg text-gray-800 cursor-pointer">Si funksionon kontrolli i automjetit online?</summary>
-                <p className="mt-3 text-gray-700">
-                  Vendosni numrin VIN/FIN 17-shifror në fushën e kërkimit. Sistemi i jep kërkesë bazës së të dhënave ndërkombëtare dhe në pak sekonda merr informacion nga 900+ burime në 40+ vende për historinë e automjetit.
-                </p>
-              </details>
-
-              <details className="bg-white rounded-lg shadow-md p-6">
-                <summary className="font-semibold text-lg text-gray-800 cursor-pointer">A është i besueshëm kontrolli i VIN për makina të përdorura?</summary>
-                <p className="mt-3 text-gray-700">
-                  Po, kontrolli i VIN është metoda më e besueshme për të verifikuar historinë e një makine të përdorur. Sistemi përdor burime zyrtare si regjistrat e qeverive, kompani sigurimesh dhe qendra shërbimi për të siguruar informacion të saktë.
-                </p>
-              </details>
-
-              <details className="bg-white rounded-lg shadow-md p-6">
-                <summary className="font-semibold text-lg text-gray-800 cursor-pointer">Çfarë është numri VIN dhe ku e gjej?</summary>
-                <p className="mt-3 text-gray-700">
-                  VIN (Vehicle Identification Number) ose FIN është një kod unik 17-shifror që identifikon çdo automjet. E gjeni në regjistrim, në derën e shoferit (pjesa e brendshme), në xhamin e përparmë (poshtë majtas), ose në motorr.
-                </p>
-              </details>
+              {faqs.map((faq, i) => (
+                <div key={i} className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                  <button
+                    className="w-full text-left px-6 py-5 font-semibold text-slate-800 flex justify-between items-center hover:bg-slate-50 transition-colors"
+                    onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                    aria-expanded={openFaq === i}
+                  >
+                    {faq.q}
+                    <span className={`ml-4 transition-transform duration-200 ${openFaq === i ? 'rotate-180' : ''}`}>
+                      <ChevronDown className="h-5 w-5 text-blue-700" />
+                    </span>
+                  </button>
+                  {openFaq === i && (
+                    <div className="px-6 pb-5 text-slate-600 text-sm leading-relaxed">
+                      {faq.a}
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
         )}
@@ -652,15 +706,13 @@ const CarHistoryApp = () => {
       </div>
 
       {/* Footer */}
-      <footer className="w-full border-t border-gray-300 bg-white/50">
-        <div className="max-w-6xl mx-auto px-4 py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center text-sm text-gray-600">
-            <div className="mb-3 md:mb-0">
-              <p>&copy; {new Date().getFullYear()} Car History Site. Të gjitha të drejtat e rezervuara.</p>
-            </div>
-            <div className="flex items-center space-x-4">
-              <span>🇦🇱 Shqipëri</span>
-            </div>
+      <footer className="w-full bg-blue-900 text-blue-100 mt-16">
+        <div className="max-w-6xl mx-auto px-4 py-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
+          <p className="font-semibold text-white">Car History Site</p>
+          <p>&copy; {new Date().getFullYear()} Car History Site. Të gjitha të drejtat e rezervuara.</p>
+          <div className="flex items-center gap-4">
+            <span>🇦🇱 Shqipëri</span>
+            <span>🇽🇰 Kosovë</span>
           </div>
         </div>
       </footer>
